@@ -28,3 +28,10 @@ if __name__ == '__main__':
 	print(de.int())
 	print('**** Floats?:')
 	print(de.float())
+
+	print('**** Kurtosis:')
+	print(de.kurtosis())
+
+	print('**** stats:')
+	dg = de.statistics()
+	print(pd.DataFrame(dg))

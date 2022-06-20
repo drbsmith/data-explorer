@@ -25,3 +25,4 @@ def howManyFloat(series):
 			pass
 
 	return ct
+

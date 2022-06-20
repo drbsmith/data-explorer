@@ -50,3 +50,43 @@ class DataExploder:
 			percent[col] = howManyFloat(self.df[col].dropna()) / len(self.df[col])
 
 		return percent
+
+	# TODO: mad, max, mean, median, min, sem, skew, std, var, 
+	# TODO maybe: mode, quantile .5, .95, .25, .75
+	def kurtosis(self):
+		ret = {}
+
+		for col in self.df:
+			try:
+				ret[col] = self.df[col].kurtosis()
+			except TypeError:
+				ret[col] = None
+
+		return ret
+
+	def statistics(self):
+		ret = []
+
+		for col in self.df:
+			x = self.df[col]
+
+			entry = {'label': col}
+
+			try:
+				entry['max'] = x.max()
+				entry['min'] = x.min()
+				entry['mean'] = x.mean()
+				entry['median'] = x.median()
+				entry['std'] = x.std()
+				entry['var'] = x.var()
+				entry['mad'] = x.mad()
+				entry['sem'] = x.sem()
+				entry['skew'] = x.skew()
+				entry['kurtosis'] = x.kurtosis()
+				entry['mode'] = x.mode()
+			except TypeError:
+				pass # it can't be cast to numeric
+
+			ret.append(entry)
+
+		return ret

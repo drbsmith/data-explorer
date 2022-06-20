@@ -36,3 +36,7 @@ Identify the most likely data type for each column.
 
 
 Missing values: an empty entry can be cast to int/float, it's still empty. In hypothesis testing these need to be excluded.
+
+## References
+
+https://docs.aws.amazon.com/sagemaker/latest/dg/autopilot-automate-model-development.html
