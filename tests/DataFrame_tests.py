@@ -17,6 +17,9 @@ if __name__ == '__main__':
 
 	de = DataExploder(df)
 
+	print('**** text tests:')
+	print(pd.DataFrame(de.allTextTests()))
+
 	# to make these better tests, check the results, using a test .csv that we know the results of.
 	print('**** Unique:')
 	print(de.unique())
