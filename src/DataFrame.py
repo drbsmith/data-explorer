@@ -51,20 +51,31 @@ class DataExploder:
 
 		return percent
 
-	# TODO: mad, max, mean, median, min, sem, skew, std, var, 
-	# TODO maybe: mode, quantile .5, .95, .25, .75
-	def kurtosis(self):
-		ret = {}
+	def allLogicTests(self):
+
+		ret = []
+
+		uni = self.unique()
+		miss = self.missing()
+		notreal = self.int()
+		real = self.float()
 
 		for col in self.df:
-			try:
-				ret[col] = self.df[col].kurtosis()
-			except TypeError:
-				ret[col] = None
+			entry = {'label': col}
+			entry['unique'] = uni[col]
+			entry['missing'] = miss[col]
+			entry['real-numbers'] = real[col]
+			entry['integers'] = notreal[col]
+
+			ret.append(entry)
 
 		return ret
 
-	def statistics(self):
+	def allStatisticTests(self):
+		"""! does: 
+		* mad, max, mean, median, min, sem, skew, std, var, kurtosis, mode
+		"""
+		# TODO maybe: mode, quantile .5, .95, .25, .75
 		ret = []
 
 		for col in self.df:
@@ -86,6 +97,43 @@ class DataExploder:
 				entry['mode'] = x.mode()
 			except TypeError:
 				pass # it can't be cast to numeric
+
+			ret.append(entry)
+
+		return ret
+
+	def allTextTests(self):
+		"""! run all of the string/text tests we have come up with. """
+		from data_exploder_util import _unique_char, _unique_punc, _unique_digits, _unique_hexdigits
+
+		ret = []
+		for col in self.df:
+			# cast each to string, maybe it's the best interpretation?
+			length = self.df[col].astype("string")
+
+			entry = {'label': col}
+			entry['len-max'] = length.str.len().max()
+			entry['len-min'] = length.str.len().min()
+			entry['len-median'] = length.str.len().median()
+			entry['len-mean'] = length.str.len().mean()
+
+			# how to think about unique characters? A deep scan would look through each entry, but that would be slow in big sets and does it tell us that much? 
+			# options: 
+			# * deep scan to create the set of characters in the column
+			# * get the number of unique characters in each entry, then stats on those
+			# * want to know how many are in: letters, numbers, symbols, punctuation, ...
+			length = length.dropna()
+			sets = length.apply(_unique_char)
+			entry['unique-char-mean'] = sets.mean()
+			entry['unique-char-max'] = sets.max()
+			entry['unique-char-min'] = sets.min()
+
+			sets = length.apply(_unique_punc)
+			entry['unique-punc-mean'] = sets.mean()
+			sets = length.apply(_unique_digits)
+			entry['unique-digits-mean'] = sets.mean()
+			sets = length.apply(_unique_hexdigits)
+			entry['unique-hexdigits-mean'] = sets.mean()
 
 			ret.append(entry)
 

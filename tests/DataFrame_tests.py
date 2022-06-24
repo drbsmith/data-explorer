@@ -3,7 +3,7 @@
 
 
 import os,sys
-p = os.path.abspath('../src')
+p = os.path.abspath('./src')
 sys.path.append(p)
 
 from DataFrame import DataExploder
@@ -32,9 +32,6 @@ if __name__ == '__main__':
 	print('**** Floats?:')
 	print(de.float())
 
-	print('**** Kurtosis:')
-	print(de.kurtosis())
-
-	print('**** stats:')
-	dg = de.statistics()
+	print('**** statistics:')
+	dg = de.allStatisticTests()
 	print(pd.DataFrame(dg))
