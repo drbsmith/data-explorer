@@ -94,7 +94,7 @@ class DataExploder:
 				entry['sem'] = x.sem()
 				entry['skew'] = x.skew()
 				entry['kurtosis'] = x.kurtosis()
-				entry['mode'] = x.mode()
+				# entry['mode'] = x.mode() # <-- need to better understand the outputs. Sometimes it's many elements, not a single number
 			except TypeError:
 				pass # it can't be cast to numeric
 
@@ -124,16 +124,17 @@ class DataExploder:
 			# * want to know how many are in: letters, numbers, symbols, punctuation, ...
 			length = length.dropna()
 			sets = length.apply(_unique_char)
-			entry['unique-char-mean'] = sets.mean()
-			entry['unique-char-max'] = sets.max()
-			entry['unique-char-min'] = sets.min()
+			if len(sets) > 0:
+				entry['unique-char-mean'] = sets.mean()
+				entry['unique-char-max'] = sets.max()
+				entry['unique-char-min'] = sets.min()
 
-			sets = length.apply(_unique_punc)
-			entry['unique-punc-mean'] = sets.mean()
-			sets = length.apply(_unique_digits)
-			entry['unique-digits-mean'] = sets.mean()
-			sets = length.apply(_unique_hexdigits)
-			entry['unique-hexdigits-mean'] = sets.mean()
+				sets = length.apply(_unique_punc)
+				entry['unique-punc-mean'] = sets.mean()
+				sets = length.apply(_unique_digits)
+				entry['unique-digits-mean'] = sets.mean()
+				sets = length.apply(_unique_hexdigits)
+				entry['unique-hexdigits-mean'] = sets.mean()
 
 			ret.append(entry)
 

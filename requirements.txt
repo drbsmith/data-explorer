@@ -1,0 +1,12 @@
+#
+###### pip requirements ######
+#
+
+# json format logging
+python-json-logger == 2.0.1
+
+# pandas. say no more.
+pandas == 1.1.4
+
+# date parsing
+python-dateutil = 2.8.1

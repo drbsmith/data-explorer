@@ -26,3 +26,10 @@ def howManyFloat(series):
 
 	return ct
 
+def dateLike(series):
+	"""! perform a number of tests to try and assess the "date likeness" of the data in the series.
+
+	-or- could throw some ML at it, right? but we have a deterministic function to try and cast it to datetime.
+	"""
+	ct = 0
+	
